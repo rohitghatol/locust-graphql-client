@@ -8,7 +8,6 @@ This GraphQL Client is based on Prisma's Simple GraphQL Client for Python (https
 # Usage
 
 ```python
-import json
 from locust import HttpLocust, TaskSet, task
 from locustgraphqlclient import GraphQLLocust
 
@@ -33,8 +32,7 @@ class UserBehavior(TaskSet):
             'username': 'gm',
             'password': 'centric8'
         }
-        data = self.client.execute("login", query, variables)
-        result = json.loads(data)
+        result = self.client.execute("login", query, variables)
 
         # Inject the Access Token in the Client, so subsequent requests can be made
         self.client.inject_token(result['data']['login']['access_token'])
