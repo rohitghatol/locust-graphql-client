@@ -1,13 +1,3 @@
-# GraphQL Client for Locust
-
-Locust is a python performance test library. Locust supports http client out of the box.
-This library provides the GraphQL Client for Locust.
-
-This GraphQL Client is based on Prisma's Simple GraphQL Client for Python (https://github.com/prisma/python-graphql-client)
-
-# Usage
-
-```python
 import json
 from locust import HttpLocust, TaskSet, task
 from locustgraphqlclient import GraphQLLocust
@@ -73,5 +63,3 @@ class WebsiteUser(GraphQLLocust):
     task_set = UserBehavior
     min_wait = 5000
     max_wait = 9000
-
-```
