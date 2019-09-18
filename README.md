@@ -5,6 +5,20 @@ This library provides the GraphQL Client for Locust.
 
 This GraphQL Client is based on Prisma's Simple GraphQL Client for Python (https://github.com/prisma/python-graphql-client)
 
+# API
+
+```python
+class GraphQLClient:
+ def execute(self, label, query, variables=None, type ='graphql'):
+```
+
+####Arguments
+* type = Locust Request Type. Default value is 'graphql'
+* label = Locust Name
+* query = GraphQL Query
+* variables = GraphQL Variables. Default value is None
+
+
 # Usage
 
 ```python
