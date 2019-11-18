@@ -1,3 +1,4 @@
+import sys
 import time
 import json
 import urllib
@@ -14,20 +15,24 @@ class MeasuredGraphQLClient(GraphQLClient):
             result = json.loads(data)
         except urllib.error.HTTPError as e:
             total_time = int((time.time() - start_time) * 1000)
-            events.request_failure.fire(request_type=type, name=label, response_time=total_time, exception=e)
+            events.request_failure.fire(request_type=type, name=label, response_time=total_time, exception=e,
+                                        response_length=sys.getsizeof(result))
         except urllib.error.URLError as e:
             total_time = int((time.time() - start_time) * 1000)
-            events.request_failure.fire(request_type=type, name=label, response_time=total_time, exception=e)
+            events.request_failure.fire(request_type=type, name=label, response_time=total_time, exception=e,
+                                        response_length=sys.getsizeof(result))
         except ValueError as err:
             total_time = int((time.time() - start_time) * 1000)
-            events.request_failure.fire(request_type=type, name=label, response_time=total_time, exception=err)
+            events.request_failure.fire(request_type=type, name=label, response_time=total_time, exception=err,
+                                        response_length=sys.getsizeof(result))
         else:
             total_time = int((time.time() - start_time) * 1000)
             if "errors" in result:
                 events.request_failure.fire(request_type=type, name=label, response_time=total_time,
-                                            exception=result["errors"])
+                                            exception=result["errors"], response_length=sys.getsizeof(result))
             else:
-                events.request_success.fire(request_type=type, name=label, response_time=total_time, response_length=0)
+                events.request_success.fire(request_type=type, name=label, response_time=total_time,
+                                            response_length=sys.getsizeof(result))
         return result
 
 
