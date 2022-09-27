@@ -51,13 +51,14 @@ class UserBehavior(TaskSet):
                         id
                         username
                         firstName
-                        lastName                    
+                        lastName
                       }
                     }'''
         result = self.client.execute("me", query)
 
 
 class WebsiteUser(GraphQLLocust):
-    task_set = UserBehavior
+    endpoint = "/graphql"
+    tasks = [UserBehavior]
     min_wait = 5000
     max_wait = 9000
